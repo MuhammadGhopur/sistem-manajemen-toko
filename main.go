@@ -15,10 +15,9 @@ func main() {
 
 	config.ConnectDB()
 
-	routes.CategoriyRoutes(r)
-	routes.ProductRoutes(r)
+	routes.WebRoutes(r)
 
-	config.DB.AutoMigrate(&models.Category{}, models.Product{})
+	config.DB.AutoMigrate(&models.Category{}, models.Product{}, models.User{})
 
 	r.Run(":3000")
 }

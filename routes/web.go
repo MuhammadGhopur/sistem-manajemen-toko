@@ -2,24 +2,35 @@ package routes
 
 import (
 	"sistem-manajemen-toko/controllers"
+	"sistem-manajemen-toko/middlewares"
 
 	"github.com/gin-gonic/gin"
 )
 
-func CategoriyRoutes(r *gin.Engine) {
-	r.GET("/category", controllers.CategoryIndex)
-	r.GET("/category/create", controllers.CreateCategoryPage)
-	r.POST("/category", controllers.CreateCategory)
-	r.GET("/category/update/:id", controllers.UpdateCategoryPage)
-	r.POST("/category/update/:id", controllers.UpdateCategory)
-	r.GET("/category/delete/:id", controllers.DeleteCategory)
-}
+func WebRoutes(r *gin.Engine) {
+	// LOGIN PUBLIK
+	r.GET("/login", controllers.LoginPage)
+	r.POST("/login", controllers.LoginProcess)
+	r.GET("/logout", controllers.Logout)
 
-func ProductRoutes(r *gin.Engine) {
-	r.GET("/product", controllers.ProductIndex)
-	r.GET("/product/create", controllers.CreateProductPage)
-	r.POST("/product", controllers.CreateProduct)
-	r.GET("/product/update/:id", controllers.UpdateProductPage)
-	r.POST("/product/update/:id", controllers.UpdateProduct)
-	r.GET("/product/delete/:id", controllers.DeleteProduct)
+	// PROTEKSI
+	auth := r.Group("/")
+	auth.Use(middlewares.AuthMiddleware())
+
+	// CATEGORY
+	auth.GET("/category", controllers.CategoryIndex)
+	auth.GET("/category/create", controllers.CreateCategoryPage)
+	auth.POST("/category", controllers.CreateCategory)
+	auth.GET("/category/update/:id", controllers.UpdateCategoryPage)
+	auth.POST("/category/update/:id", controllers.UpdateCategory)
+	auth.GET("/category/delete/:id", controllers.DeleteCategory)
+
+	// PRODUCT
+	auth.GET("/product", controllers.ProductIndex)
+	auth.GET("/product/create", controllers.CreateProductPage)
+	auth.POST("/product", controllers.CreateProduct)
+	auth.GET("/product/update/:id", controllers.UpdateProductPage)
+	auth.POST("/product/update/:id", controllers.UpdateProduct)
+	auth.GET("/product/delete/:id", controllers.DeleteProduct)
+
 }
