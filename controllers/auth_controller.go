@@ -23,27 +23,24 @@ func LoginProcess(c *gin.Context) {
 		Where("username = ?", username).
 		First(&user).Error
 
-	// ❌ user tidak ditemukan
 	if err != nil {
 		c.HTML(http.StatusUnauthorized, "login.html", gin.H{
 			"error": "username atau password salah",
 		})
-		return // 🔥 INI WAJIB
+		return
 	}
 
-	// ❌ password salah
 	if user.Password != password {
 		c.HTML(http.StatusUnauthorized, "login.html", gin.H{
 			"error": "username atau password salah",
 		})
-		return // 🔥 INI WAJIB
+		return
 	}
 
-	// ✅ login berhasil
 	c.SetCookie("login", "true", 3600, "/", "", false, true)
 
 	c.Redirect(http.StatusFound, "/category")
-	return // 🔥 INI JUGA WAJIB
+	return
 }
 
 func Logout(c *gin.Context) {

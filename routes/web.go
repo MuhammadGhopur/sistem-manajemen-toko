@@ -12,6 +12,8 @@ func WebRoutes(r *gin.Engine) {
 	r.GET("/login", controllers.LoginPage)
 	r.POST("/login", controllers.LoginProcess)
 	r.GET("/logout", controllers.Logout)
+	r.GET("/users/create", controllers.CreateUserPage)
+	r.POST("/users", controllers.CreateUser)
 
 	// PROTEKSI
 	auth := r.Group("/")
