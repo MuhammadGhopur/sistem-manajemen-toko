@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Edit User</title>
+</head>
+<body>
+    <div class="container mt-4">
+
+	<h2>Edit Product</h2>
+
+	<!-- form update user -->
+	<form method="POST" action="/product/update/{{ .product.ID }}">
+
+		<div class="mb-3">
+			<label>Nama</label>
+			<input type="text" name="name" value="{{ .product.Name }}" class="form-control" required>
+		</div>
+
+		<div class="mb-3">
+			<label>Harga</label>
+			<input type="email" name="email" value="{{ .product.Price }}" class="form-control" required>
+		</div>
+
+		<button type="submit" class="btn btn-success">Simpan</button>
+		<a href="/product" class="btn btn-secondary">Kembali</a>
+
+	</form>
+
+</div>
+</body>
+</html>

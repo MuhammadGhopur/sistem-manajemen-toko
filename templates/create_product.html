@@ -1,0 +1,38 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    
+
+<div class="container mt-4">
+
+        <h2 class="mb-3">Tambah Product</h2>
+
+        <form method="POST" action="/product">
+            <div class="mb-3">
+                <label class="form-label">Nama</label>
+                <input type="text" name="name" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Harga</label>
+                <input type="text" name="price" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label>Kategori</label>
+                <select name="category_id" class="form-control">
+                    <option value="">-- Pilih Kategori --</option>
+                    {{ range .categories }}
+                    <option value="{{ .ID }}">{{ .Nama }}</option>
+                    {{ end }}
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-success">
+                Simpan
+            </button>
+
+            <a href="/product" class="btn btn-secondary">
+                Kembali
+            </a>
+        </form>
+
+    </div>
