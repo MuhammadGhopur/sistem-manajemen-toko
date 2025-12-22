@@ -12,27 +12,31 @@ func WebRoutes(r *gin.Engine) {
 	r.GET("/login", controllers.LoginPage)
 	r.POST("/login", controllers.LoginProcess)
 	r.GET("/logout", controllers.Logout)
-	r.GET("/users/create", controllers.CreateUserPage)
-	r.POST("/users", controllers.CreateUser)
 
 	// PROTEKSI
 	auth := r.Group("/")
 	auth.Use(middlewares.AuthMiddleware())
 
+	admin := r.Group("/")
+	admin.Use(middlewares.RoleMiddleware("admin"))
+
+	admin.GET("/users/create", controllers.CreateUserPage)
+	admin.POST("/users", controllers.CreateUser)
+
 	// CATEGORY
 	auth.GET("/category", controllers.CategoryIndex)
-	auth.GET("/category/create", controllers.CreateCategoryPage)
-	auth.POST("/category", controllers.CreateCategory)
-	auth.GET("/category/update/:id", controllers.UpdateCategoryPage)
-	auth.POST("/category/update/:id", controllers.UpdateCategory)
-	auth.GET("/category/delete/:id", controllers.DeleteCategory)
+	admin.GET("/category/create", controllers.CreateCategoryPage)
+	admin.POST("/category", controllers.CreateCategory)
+	admin.GET("/category/update/:id", controllers.UpdateCategoryPage)
+	admin.POST("/category/update/:id", controllers.UpdateCategory)
+	admin.GET("/category/delete/:id", controllers.DeleteCategory)
 
 	// PRODUCT
 	auth.GET("/product", controllers.ProductIndex)
-	auth.GET("/product/create", controllers.CreateProductPage)
-	auth.POST("/product", controllers.CreateProduct)
-	auth.GET("/product/update/:id", controllers.UpdateProductPage)
-	auth.POST("/product/update/:id", controllers.UpdateProduct)
-	auth.GET("/product/delete/:id", controllers.DeleteProduct)
+	admin.GET("/product/create", controllers.CreateProductPage)
+	admin.POST("/product", controllers.CreateProduct)
+	admin.GET("/product/update/:id", controllers.UpdateProductPage)
+	admin.POST("/product/update/:id", controllers.UpdateProduct)
+	admin.GET("/product/delete/:id", controllers.DeleteProduct)
 
 }

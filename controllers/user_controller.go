@@ -15,6 +15,7 @@ func CreateUserPage(c *gin.Context) {
 func CreateUser(c *gin.Context) {
 	username := c.PostForm("username")
 	password := c.PostForm("password")
+	role := c.PostForm("role")
 
 	// hash
 	hashedPassword, err := bcrypt.GenerateFromPassword(
@@ -31,6 +32,7 @@ func CreateUser(c *gin.Context) {
 	user := models.User{
 		Username: username,
 		Password: string(hashedPassword),
+		Role:     role,
 	}
 
 	config.DB.Create(&user)
