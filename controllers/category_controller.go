@@ -3,6 +3,7 @@ package controllers
 import (
 	"net/http"
 	"sistem-manajemen-toko/config"
+	"sistem-manajemen-toko/helpers"
 	"sistem-manajemen-toko/models"
 	"strconv"
 
@@ -28,6 +29,14 @@ func CreateCategory(c *gin.Context) {
 	category.Nama = c.PostForm("name")
 
 	config.DB.Create(&category)
+
+	helpers.CreateAuditLog(
+		c,
+		"CREATE",
+		"categories",
+		category.ID,
+		"Menambah kategori baru",
+	)
 
 	c.Redirect(http.StatusFound, "/category")
 }
@@ -56,6 +65,14 @@ func UpdateCategory(c *gin.Context) {
 
 	config.DB.Save(&category)
 
+	helpers.CreateAuditLog(
+		c,
+		"UPDATE",
+		"categories",
+		category.ID,
+		"Update kategori",
+	)
+
 	c.Redirect(http.StatusFound, "/category")
 }
 
@@ -67,6 +84,14 @@ func DeleteCategory(c *gin.Context) {
 	config.DB.First(&category, id)
 
 	config.DB.Delete(&category)
+
+	helpers.CreateAuditLog(
+		c,
+		"DELETE",
+		"categories",
+		category.ID,
+		"Hapus kategori",
+	)
 
 	c.Redirect(http.StatusFound, "/category")
 

@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"sistem-manajemen-toko/config"
 	"sistem-manajemen-toko/models"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
@@ -47,6 +48,9 @@ func LoginProcess(c *gin.Context) {
 
 	c.SetCookie("login", "true", 3600, "/", "", false, true)
 	c.SetCookie("role", user.Role, 3600, "/", "", false, true)
+	c.SetCookie("user_id", strconv.Itoa(int(user.ID)), 3600, "/", "", false, true)
+	c.SetCookie("username", user.Username, 3600, "/", "", false, true)
+	c.SetCookie("role", user.Role, 3600, "/", "", false, true)
 
 	c.Redirect(http.StatusFound, "/category")
 	return
@@ -56,4 +60,4 @@ func Logout(c *gin.Context) {
 	c.SetCookie("login", "", -1, "/", "", false, true)
 
 	c.Redirect(http.StatusFound, "/login")
-} 
+}

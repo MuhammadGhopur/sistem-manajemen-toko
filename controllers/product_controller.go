@@ -3,6 +3,7 @@ package controllers
 import (
 	"net/http"
 	"sistem-manajemen-toko/config"
+	"sistem-manajemen-toko/helpers"
 	"sistem-manajemen-toko/models"
 	"strconv"
 
@@ -42,6 +43,14 @@ func CreateProduct(c *gin.Context) {
 
 	config.DB.Create(&product)
 
+	helpers.CreateAuditLog(
+		c,
+		"CREATE",
+		"products",
+		product.ID,
+		"Menambah produk baru",
+	)
+
 	c.Redirect(http.StatusFound, "/product")
 
 }
@@ -72,6 +81,14 @@ func UpdateProduct(c *gin.Context) {
 
 	config.DB.Save(&product)
 
+	helpers.CreateAuditLog(
+		c,
+		"UPDATE",
+		"products",
+		product.ID,
+		"Update produk",
+	)
+
 	c.Redirect(http.StatusFound, "/product")
 
 }
@@ -84,6 +101,14 @@ func DeleteProduct(c *gin.Context) {
 	config.DB.First(&product, id)
 
 	config.DB.Delete(&product)
+
+	helpers.CreateAuditLog(
+		c,
+		"DELETE",
+		"products",
+		product.ID,
+		"Hapus produk",
+	)
 
 	c.Redirect(http.StatusFound, "/product")
 }
