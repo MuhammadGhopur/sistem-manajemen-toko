@@ -17,7 +17,7 @@ func main() {
 
 	routes.WebRoutes(r)
 
-	config.DB.AutoMigrate(&models.Category{}, models.Product{}, models.User{})
+	config.DB.AutoMigrate(&models.Category{}, models.Product{}, models.User{}, models.AuditLog{})
 
 	r.Run(":3000")
 }
