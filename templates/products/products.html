@@ -25,7 +25,9 @@
                     <td>{{ .ID }}</td>
                     <td>{{ .Name }}</td>
                     <td>{{ .Price }}</td>
-                    <td>{{ .Category.Nama }}</td>
+                    <td>
+                        {{ .Category.Nama }}
+                    </td>
                     <td>
                         <a href="/product/update/{{ .ID }}" class="btn btn-warning">Edit</a>
                         <a href="/product/delete/{{ .ID }}" onclick="return confirm('Hapus?')" class="btn btn-danger">Hapus</a>

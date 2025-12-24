@@ -5,6 +5,7 @@ import (
 	"sistem-manajemen-toko/config"
 	"sistem-manajemen-toko/helpers"
 	"sistem-manajemen-toko/models"
+	"sistem-manajemen-toko/services"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -13,9 +14,9 @@ import (
 func ProductIndex(c *gin.Context) {
 	var product []models.Product
 
-	config.DB.Preload("Category").Find(&product)
+	services.GetProduct(&product)
 
-	c.HTML(http.StatusOK, "products.html", gin.H{
+	c.HTML(http.StatusOK, "products/products.html", gin.H{
 		"products": product,
 	})
 }
@@ -25,7 +26,7 @@ func CreateProductPage(c *gin.Context) {
 
 	config.DB.Find(&categories)
 
-	c.HTML(http.StatusOK, "create_product.html", gin.H{
+	c.HTML(http.StatusOK, "products/create_product.html", gin.H{
 		"categories": categories,
 	})
 }
@@ -41,7 +42,7 @@ func CreateProduct(c *gin.Context) {
 
 	product.Price = price
 
-	config.DB.Create(&product)
+	services.CreateProduct(&product)
 
 	helpers.CreateAuditLog(
 		c,
@@ -60,9 +61,9 @@ func UpdateProductPage(c *gin.Context) {
 
 	id, _ := strconv.Atoi(c.Param("id"))
 
-	config.DB.First(&product, id)
+	services.GetProductById(&product, id)
 
-	c.HTML(http.StatusOK, "update_product.html", gin.H{
+	c.HTML(http.StatusOK, "products/update_product.html", gin.H{
 		"product": product,
 	})
 }
@@ -72,14 +73,14 @@ func UpdateProduct(c *gin.Context) {
 
 	id, _ := strconv.Atoi(c.Param("id"))
 
-	config.DB.First(&product, id)
+	services.GetProductById(&product, id)
 
 	product.Name = c.PostForm("name")
 	price, _ := strconv.Atoi(c.PostForm("price"))
 
 	product.Price = price
 
-	config.DB.Save(&product)
+	services.UpdateProduct(&product)
 
 	helpers.CreateAuditLog(
 		c,
@@ -98,9 +99,9 @@ func DeleteProduct(c *gin.Context) {
 
 	id, _ := strconv.Atoi(c.Param("id"))
 
-	config.DB.First(&product, id)
+	services.GetProductById(&product, id)
 
-	config.DB.Delete(&product)
+	services.DeleteProduct(&product)
 
 	helpers.CreateAuditLog(
 		c,

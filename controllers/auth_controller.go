@@ -20,9 +20,6 @@ func LoginProcess(c *gin.Context) {
 	username := c.PostForm("username")
 	password := c.PostForm("password")
 
-	fmt.Println("Attempting login for username:", username)
-	fmt.Println("Submitted password:", password)
-
 	var user models.User
 
 	err := config.DB.
