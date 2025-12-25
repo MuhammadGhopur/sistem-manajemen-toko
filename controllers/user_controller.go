@@ -10,7 +10,7 @@ import (
 )
 
 func CreateUserPage(c *gin.Context) {
-	c.HTML(http.StatusOK, "users/create.html", nil)
+	c.HTML(http.StatusOK, "create.html", nil)
 }
 func CreateUser(c *gin.Context) {
 	username := c.PostForm("username")

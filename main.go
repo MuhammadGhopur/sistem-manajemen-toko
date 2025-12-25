@@ -11,7 +11,7 @@ import (
 func main() {
 	r := gin.Default()
 
-	config.LoadAppTemplates(r)
+	r.LoadHTMLGlob("templates/**/*")
 
 	config.ConnectDB()
 

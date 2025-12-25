@@ -16,7 +16,7 @@ func ProductIndex(c *gin.Context) {
 
 	services.GetProduct(&product)
 
-	c.HTML(http.StatusOK, "products/products.html", gin.H{
+	c.HTML(http.StatusOK, "products.html", gin.H{
 		"products": product,
 	})
 }
@@ -26,7 +26,7 @@ func CreateProductPage(c *gin.Context) {
 
 	config.DB.Find(&categories)
 
-	c.HTML(http.StatusOK, "products/create_product.html", gin.H{
+	c.HTML(http.StatusOK, "create_product.html", gin.H{
 		"categories": categories,
 	})
 }
@@ -63,7 +63,7 @@ func UpdateProductPage(c *gin.Context) {
 
 	services.GetProductById(&product, id)
 
-	c.HTML(http.StatusOK, "products/update_product.html", gin.H{
+	c.HTML(http.StatusOK, "update_product.html", gin.H{
 		"product": product,
 	})
 }

@@ -14,13 +14,13 @@ func CategoryIndex(c *gin.Context) {
 	var category []models.Category
 
 	config.DB.Find(&category)
-	c.HTML(http.StatusOK, "categories/categories.html", gin.H{
+	c.HTML(http.StatusOK, "categories.html", gin.H{
 		"categories": category,
 	})
 }
 
 func CreateCategoryPage(c *gin.Context) {
-	c.HTML(http.StatusOK, "categories/create_category.html", nil)
+	c.HTML(http.StatusOK, "create_category.html", nil)
 }
 
 func CreateCategory(c *gin.Context) {
@@ -49,7 +49,7 @@ func UpdateCategoryPage(c *gin.Context) {
 
 	config.DB.First(&category, id)
 
-	c.HTML(http.StatusOK, "categories/update_category.html", gin.H{
+	c.HTML(http.StatusOK, "update_category.html", gin.H{
 		"category": category,
 	})
 }

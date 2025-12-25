@@ -49,7 +49,7 @@ func LoginProcess(c *gin.Context) {
 	c.SetCookie("username", user.Username, 3600, "/", "", false, true)
 	c.SetCookie("role", user.Role, 3600, "/", "", false, true)
 
-	c.Redirect(http.StatusFound, "/category")
+	c.Redirect(http.StatusFound, "/product")
 	return
 }
 
