@@ -14,7 +14,12 @@ import (
 func ProductIndex(c *gin.Context) {
 	var product []models.Product
 
-	services.GetProduct(&product)
+	err := services.GetProduct(&product)
+	if err != nil {
+		c.HTML(http.StatusBadRequest, "products.html", gin.H{
+			"error": err.Error(),
+		})
+	}
 
 	c.HTML(http.StatusOK, "products.html", gin.H{
 		"products": product,
@@ -42,7 +47,12 @@ func CreateProduct(c *gin.Context) {
 
 	product.Price = price
 
-	services.CreateProduct(&product)
+	err := services.CreateProduct(&product)
+	if err != nil {
+		c.HTML(http.StatusBadRequest, "create_product.html", gin.H{
+			"error": err.Error(),
+		})
+	}
 
 	helpers.CreateAuditLog(
 		c,
@@ -80,7 +90,12 @@ func UpdateProduct(c *gin.Context) {
 
 	product.Price = price
 
-	services.UpdateProduct(&product)
+	err := services.UpdateProduct(&product)
+	if err != nil {
+		c.HTML(http.StatusBadRequest, "update_product.html", gin.H{
+			"error": err.Error(),
+		})
+	}
 
 	helpers.CreateAuditLog(
 		c,
@@ -101,7 +116,12 @@ func DeleteProduct(c *gin.Context) {
 
 	services.GetProductById(&product, id)
 
-	services.DeleteProduct(&product)
+	err := services.DeleteProduct(&product)
+	if err != nil {
+		c.HTML(http.StatusBadRequest, "products.html", gin.H{
+			"error": err.Error(),
+		})
+	}
 
 	helpers.CreateAuditLog(
 		c,

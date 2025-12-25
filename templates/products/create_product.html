@@ -12,7 +12,7 @@
         <form method="POST" action="/product">
             <div class="mb-3">
                 <label class="form-label">Nama</label>
-                <input type="text" name="name" class="form-control" required>
+                <input type="text" name="name" class="form-control">
             </div>
             <div class="mb-3">
                 <label class="form-label">Harga</label>
@@ -33,6 +33,11 @@
             <a href="/product" class="btn btn-secondary">
                 Kembali
             </a>
+            {{ if .error }}
+            <div class="alert alert-danger mt-2">
+                {{ .error }}
+            </div>
+            {{ end }}
         </form>
     </div>   
 </body>

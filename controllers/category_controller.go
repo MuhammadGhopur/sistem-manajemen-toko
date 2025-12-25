@@ -2,9 +2,9 @@ package controllers
 
 import (
 	"net/http"
-	"sistem-manajemen-toko/config"
 	"sistem-manajemen-toko/helpers"
 	"sistem-manajemen-toko/models"
+	"sistem-manajemen-toko/services"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -13,7 +13,7 @@ import (
 func CategoryIndex(c *gin.Context) {
 	var category []models.Category
 
-	config.DB.Find(&category)
+	services.CategoryIndex(&category)
 	c.HTML(http.StatusOK, "categories.html", gin.H{
 		"categories": category,
 	})
@@ -28,7 +28,7 @@ func CreateCategory(c *gin.Context) {
 
 	category.Nama = c.PostForm("name")
 
-	config.DB.Create(&category)
+	services.CreateCategory(&category)
 
 	helpers.CreateAuditLog(
 		c,
@@ -47,7 +47,7 @@ func UpdateCategoryPage(c *gin.Context) {
 
 	id, _ := strconv.Atoi(c.Param("id"))
 
-	config.DB.First(&category, id)
+	services.GetCategoryById(&category, id)
 
 	c.HTML(http.StatusOK, "update_category.html", gin.H{
 		"category": category,
@@ -59,11 +59,11 @@ func UpdateCategory(c *gin.Context) {
 
 	id, _ := strconv.Atoi(c.Param("id"))
 
-	config.DB.First(&category, id)
+	services.GetCategoryById(&category, id)
 
 	category.Nama = c.PostForm("name")
 
-	config.DB.Save(&category)
+	services.UpdateCategory(&category)
 
 	helpers.CreateAuditLog(
 		c,
@@ -81,9 +81,9 @@ func DeleteCategory(c *gin.Context) {
 
 	id, _ := strconv.Atoi(c.Param("id"))
 
-	config.DB.First(&category, id)
+	services.GetCategoryById(&category, id)
 
-	config.DB.Delete(&category)
+	services.DeleteCategory(&category)
 
 	helpers.CreateAuditLog(
 		c,

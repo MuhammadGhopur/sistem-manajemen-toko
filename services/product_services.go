@@ -6,13 +6,22 @@ import (
 	"sistem-manajemen-toko/repositories"
 )
 
-func GetProduct(products *[]models.Product) {
-	repositories.GetProducts(products)
+func GetProduct(products *[]models.Product) error {
+	if len(*products) == 0 {
+		return errors.New("Produk tidak ditemukan")
+	}
+
+	err := repositories.GetProducts(products)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 func GetProductById(product *models.Product, id int) {
 	repositories.GetProductById(product, id)
 }
 func CreateProduct(product *models.Product) error {
+
 	if product.Name == "" {
 		return errors.New("Nama produk harus diisi")
 	}
@@ -22,11 +31,12 @@ func CreateProduct(product *models.Product) error {
 	if product.CategoryID == 0 {
 		return errors.New("Isi kategori")
 	}
-	if product.Price <= 1000 {
-		return errors.New("Harga harus lebih dari 1000")
+
+	err := repositories.CreateProduct(product)
+	if err != nil {
+		return err
 	}
 
-	repositories.CreateProduct(product)
 	return nil
 }
 func UpdateProduct(product *models.Product) error {
@@ -39,9 +49,18 @@ func UpdateProduct(product *models.Product) error {
 		return errors.New("Harga harus lebih dari 0")
 	}
 
-	repositories.UpdateProduct(product)
+	err := repositories.UpdateProduct(product)
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
-func DeleteProduct(product *models.Product) {
-	repositories.DeleteProduct(product)
+func DeleteProduct(product *models.Product) error {
+
+	err := repositories.DeleteProduct(product)
+	if err != nil {
+		return err
+	}
+	return nil
 }

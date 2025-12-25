@@ -13,14 +13,14 @@ func GetProductById(product *models.Product, id int) {
 	config.DB.Unscoped().First(product, id)
 }
 
-func CreateProduct(product *models.Product) {
-	config.DB.Create(product)
+func CreateProduct(product *models.Product) error {
+	return config.DB.Create(product).Error
 }
 
-func UpdateProduct(product *models.Product) {
-	config.DB.Save(product)
+func UpdateProduct(product *models.Product) error {
+	return config.DB.Save(product).Error
 }
 
-func DeleteProduct(product *models.Product) {
-	config.DB.Unscoped().Delete(product)
+func DeleteProduct(product *models.Product) error {
+	return config.DB.Unscoped().Delete(product).Error
 }

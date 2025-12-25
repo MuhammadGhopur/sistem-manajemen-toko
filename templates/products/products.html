@@ -40,6 +40,12 @@
         
         <a href="/category" class="btn btn-success">Kategori</a>
         <a href="/logout" class="btn btn-danger" onclick="return confirm('Keluar?')">Logout</a>
+
+        {{ if .error }}
+            <div class="alert alert-danger">
+                {{ .error }}
+            </div>
+        {{ end }}
     </div>
 </body>
 </html>
